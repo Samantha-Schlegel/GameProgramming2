@@ -9652,7 +9652,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2208848, y: -0.51355, z: -10}
+  m_LocalPosition: {x: -2.221907, y: -0.51355, z: -10}
   m_LocalScale: {x: 0.16915, y: 0.16915, z: 0.16915}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20143,14 +20143,46 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.9150943
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2547288775903046235, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8724890514878957345, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
     - {fileID: 7684323111282619730, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
     - {fileID: 4752492702049462644, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7738097296533656304, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 920165898}
   m_SourcePrefab: {fileID: 100100000, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
+--- !u!1 &920165897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7738097296533656304, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
+  m_PrefabInstance: {fileID: 920165896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &920165898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920165897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eb64cd40507aa4e8ddddb3c09676dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wanderWidth: 18
+  wanderHeight: 10
+  startingPosition: {x: 0, y: 0}
+  speed: 2
+  pauseDuration: 1
+  player: {fileID: 0}
+  detectionRadius: 5
+  loseSightTime: 2
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &932074576
 GameObject:
   m_ObjectHideFlags: 0
