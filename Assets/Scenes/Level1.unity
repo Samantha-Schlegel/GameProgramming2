@@ -20081,11 +20081,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7593369080459963032, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.5992444
+      value: -3.384
       objectReference: {fileID: 0}
     - target: {fileID: 7593369080459963032, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7172154
+      value: 0.82
       objectReference: {fileID: 0}
     - target: {fileID: 7593369080459963032, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20154,6 +20154,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7738097296533656304, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 920165898}
+    - targetCorrespondingSourceObject: {fileID: 7738097296533656304, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 920165902}
   m_SourcePrefab: {fileID: 100100000, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
 --- !u!1 &920165897 stripped
 GameObject:
@@ -20175,14 +20178,41 @@ MonoBehaviour:
   wanderWidth: 18
   wanderHeight: 10
   startingPosition: {x: 0, y: 0}
-  speed: 2
+  speed: 1
   pauseDuration: 1
-  player: {fileID: 0}
+  player: {fileID: 1265260228}
   detectionRadius: 5
   loseSightTime: 2
   obstacleMask:
     serializedVersion: 2
+    m_Bits: 128
+--- !u!50 &920165902
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920165897}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
     m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &932074576
 GameObject:
   m_ObjectHideFlags: 0
