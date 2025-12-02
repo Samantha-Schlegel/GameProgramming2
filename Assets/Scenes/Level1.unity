@@ -9652,7 +9652,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.221907, y: -0.51355, z: -10}
+  m_LocalPosition: {x: -2.2208848, y: -0.51355, z: -10}
   m_LocalScale: {x: 0.16915, y: 0.16915, z: 0.16915}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24594,14 +24594,14 @@ RectTransform:
   m_GameObject: {fileID: 2008926555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.6684375, y: 8.519645, z: 1}
+  m_LocalScale: {x: 5.0671864, y: 7.6159663, z: 0.89393}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1336545219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -149, y: 145}
+  m_AnchoredPosition: {x: -136, y: 37}
   m_SizeDelta: {x: 160.3095, y: 69.9257}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2008926557
@@ -24624,9 +24624,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You're a dectective on the hunt for the most wanted and dangerous, and
-    it's up to you to round up all 5 of them. Using the Wanted Posters provided (press
-    Tab to view) collect all 5 as quickly as you can to get the highest score!
+  m_text: You're hunt for the most wanted and dangerous took an undesirable turn!
+    You're now stuck inside with them all and they have a vengance. Avoid them until
+    the timer is out to survive!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -24660,7 +24660,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
