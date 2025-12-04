@@ -18,7 +18,7 @@ public class GameTimer : MonoBehaviour
     {
         remaining = startTime;
         elapsed = 0f;
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindFirstObjectByType<GameManager>();
         UpdateDisplay();
     }
 
@@ -53,7 +53,7 @@ public class GameTimer : MonoBehaviour
             currentScore = ScoreManager.instance.score;
 
         if (gameManager == null)
-            gameManager = FindObjectOfType<GameManager>();
+            gameManager = FindFirstObjectByType<GameManager>();
 
         if (gameManager != null)
         {

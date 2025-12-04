@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AIChaseScript : MonoBehaviour
 {
@@ -13,115 +14,174 @@ public class AIChaseScript : MonoBehaviour
     [Header("Chase Settings")]
     public Transform player;
     public float detectionRadius = 5f;
-    public float loseSightTime = 2f;
-    public LayerMask obstacleMask; // Assign your walls/obstacles layer here
+    public float loseSightTime = 1f;
+    public LayerMask obstacleMask;
 
-    private Vector2 target;
+    [Header("Trail Settings")]
+    public float recordInterval = 0.1f;
+    public int maxTrailLength = 20;
+
     private Rigidbody2D rb;
     private bool isPaused = false;
     private bool isChasing = false;
     private float loseSightTimer = 0f;
 
+    private Queue<Vector2> playerTrail = new Queue<Vector2>();
+    private float trailTimer = 0f;
+
+    private Vector2 wanderTarget;
+    private Coroutine wanderCoroutine;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        rb.freezeRotation = true;
+
         if (player == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
             if (p != null) player = p.transform;
         }
-
-        rb.gravityScale = 0;
-        rb.freezeRotation = true;
     }
 
     private void OnEnable()
     {
-        target = GetRandomTarget();
+        StartWandering();
     }
 
     private void FixedUpdate()
     {
-        if (isPaused) return;
+        if (player == null) return;
 
-        Vector2 moveDir;
-
-        // Check if player is in detection radius AND visible
-        if (player != null && Vector2.Distance(rb.position, player.position) <= detectionRadius)
+        trailTimer += Time.fixedDeltaTime;
+        if (trailTimer >= recordInterval)
         {
-            Vector2 dirToPlayer = ((Vector2)player.position - rb.position).normalized;
-            float distance = Vector2.Distance(rb.position, player.position);
+            playerTrail.Enqueue(player.position);
+            if (playerTrail.Count > maxTrailLength)
+                playerTrail.Dequeue();
+            trailTimer = 0f;
+        }
 
-            RaycastHit2D hit = Physics2D.Raycast(rb.position, dirToPlayer, distance, obstacleMask);
-            if (hit.collider == null) // No obstacle in the way
+        float distanceToPlayer = Vector2.Distance(rb.position, player.position);
+        bool canSeePlayer = distanceToPlayer <= detectionRadius &&
+                            Physics2D.Raycast(rb.position, (player.position - (Vector3)rb.position).normalized,
+                                distanceToPlayer, obstacleMask).collider == null;
+
+        if (canSeePlayer)
+        {
+            if (!isChasing)
             {
                 isChasing = true;
-                loseSightTimer = 0f;
+                StopWandering();
+                isPaused = false;
             }
+
+            loseSightTimer = 0f;
+            playerTrail.Clear();
+            MoveTowards(player.position, true);
+            return;
         }
 
         if (isChasing)
         {
-            // Check if player has escaped detection radius or is blocked
-            if (player != null)
+            loseSightTimer += Time.fixedDeltaTime;
+            if (loseSightTimer >= loseSightTime)
             {
-                Vector2 dirToPlayer = ((Vector2)player.position - rb.position).normalized;
-                float distance = Vector2.Distance(rb.position, player.position);
-                RaycastHit2D hit = Physics2D.Raycast(rb.position, dirToPlayer, distance, obstacleMask);
-
-                if (distance > detectionRadius || hit.collider != null)
-                {
-                    loseSightTimer += Time.fixedDeltaTime;
-                    if (loseSightTimer >= loseSightTime)
-                    {
-                        isChasing = false;
-                        target = GetRandomTarget();
-                    }
-                }
-            }
-
-            // Chase the player
-            if (player != null && isChasing)
-            {
-                moveDir = ((Vector2)player.position - rb.position).normalized;
-                rb.MovePosition(rb.position + moveDir * speed * Time.fixedDeltaTime);
+                isChasing = false;
+                StartWandering();
                 return;
             }
-        }
 
-        // Wandering behavior
-        if (Vector2.Distance(rb.position, target) < 0.1f)
-        {
-            StartCoroutine(PauseAndPickNewDestination());
+            FollowPlayerTrail();
             return;
         }
 
-        moveDir = (target - rb.position).normalized;
-        rb.MovePosition(rb.position + moveDir * speed * Time.fixedDeltaTime);
+        MoveTowards(wanderTarget, true);
     }
 
-    IEnumerator PauseAndPickNewDestination()
+    private void FollowPlayerTrail()
     {
-        isPaused = true;
-        yield return new WaitForSeconds(pauseDuration);
-        target = GetRandomTarget();
+        if (playerTrail.Count == 0) return;
+
+        Vector2 targetPos = playerTrail.Peek();
+        Vector2 moveDir = targetPos - rb.position;
+
+        if (moveDir.magnitude < 0.05f)
+        {
+            playerTrail.Dequeue();
+            return;
+        }
+
+        MoveTowards(targetPos, true);
+    }
+
+    private void MoveTowards(Vector2 target, bool allowSliding)
+    {
+        Vector2 moveDir = target - rb.position;
+        if (moveDir.magnitude < 0.05f) return;
+
+        moveDir.Normalize();
+
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, moveDir, 0.5f, obstacleMask);
+
+        if (hit.collider == null)
+        {
+            rb.MovePosition(rb.position + moveDir * speed * Time.fixedDeltaTime);
+        }
+        else if (allowSliding)
+        {
+            Vector2 tangent = Vector2.Perpendicular(moveDir).normalized;
+
+            RaycastHit2D hit1 = Physics2D.Raycast(rb.position, tangent, 0.5f, obstacleMask);
+            RaycastHit2D hit2 = Physics2D.Raycast(rb.position, -tangent, 0.5f, obstacleMask);
+
+            Vector2 slideDir = hit1.collider == null ? tangent :
+                               hit2.collider == null ? -tangent : Vector2.zero;
+
+            if (slideDir != Vector2.zero)
+                rb.MovePosition(rb.position + slideDir * speed * Time.fixedDeltaTime);
+        }
+    }
+
+    private void StartWandering()
+    {
+        if (!isActiveAndEnabled) return;
+
+        if (wanderCoroutine != null)
+            StopCoroutine(wanderCoroutine);
+
+        wanderCoroutine = StartCoroutine(WanderRoutine());
+    }
+
+    private void StopWandering()
+    {
+        if (wanderCoroutine != null)
+        {
+            StopCoroutine(wanderCoroutine);
+            wanderCoroutine = null;
+        }
         isPaused = false;
     }
 
-    private Vector2 GetRandomTarget()
+    private IEnumerator WanderRoutine()
     {
-        float halfWidth = wanderWidth / 2f;
-        float halfHeight = wanderHeight / 2f;
-        int edge = Random.Range(0, 4);
-
-        return edge switch
+        while (!isChasing)
         {
-            0 => new Vector2(startingPosition.x - halfWidth, Random.Range(startingPosition.y - halfHeight, startingPosition.y + halfHeight)), // Left
-            1 => new Vector2(startingPosition.x + halfWidth, Random.Range(startingPosition.y - halfHeight, startingPosition.y + halfHeight)), // Right
-            2 => new Vector2(Random.Range(startingPosition.x - halfWidth, startingPosition.x + halfWidth), startingPosition.y - halfHeight), // Bottom
-            3 => new Vector2(Random.Range(startingPosition.x - halfWidth, startingPosition.x + halfWidth), startingPosition.y + halfHeight), // Top
-            _ => startingPosition
-        };
+            isPaused = true;
+            yield return new WaitForSeconds(pauseDuration);
+
+            float x = Random.Range(startingPosition.x - wanderWidth / 2, startingPosition.x + wanderWidth / 2);
+            float y = Random.Range(startingPosition.y - wanderHeight / 2, startingPosition.y + wanderHeight / 2);
+            wanderTarget = new Vector2(x, y);
+
+            isPaused = false;
+
+            while (!isChasing && Vector2.Distance(rb.position, wanderTarget) > 0.1f)
+            {
+                yield return null;
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()
