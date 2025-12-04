@@ -8,6 +8,12 @@ public class EnemyTrigger : MonoBehaviour
     {
         if (other.CompareTag(playerTag))
         {
+            var power = other.GetComponent<PlayerInvisibilityPowerup>();
+            if (power != null && power.isInvincible)
+            {
+                return;
+            }
+
             EnemyScoreManager.instance.AddEnemyPoint();
         }
     }

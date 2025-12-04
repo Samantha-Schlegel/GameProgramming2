@@ -54,6 +54,16 @@ public class AIChaseScript : MonoBehaviour
     {
         if (player == null) return;
 
+        var playerPower = player.GetComponent<PlayerInvisibilityPowerup>();
+        if (playerPower != null && playerPower.isInvisibleToAI)
+        {
+            isChasing = false;
+            loseSightTimer = loseSightTime;
+            StartWandering();
+            return;
+        }
+
+
         trailTimer += Time.fixedDeltaTime;
         if (trailTimer >= recordInterval)
         {
