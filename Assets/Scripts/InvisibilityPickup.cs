@@ -3,7 +3,7 @@ using System;
 
 public class InvisibilityPickup : MonoBehaviour
 {
-    public event Action onCollected; // Event to notify spawner
+    public event Action onCollected;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
