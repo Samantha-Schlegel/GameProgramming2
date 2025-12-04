@@ -15,7 +15,6 @@ public class InvisibilityPickup : MonoBehaviour
                 power.ActivatePowerup();
             }
 
-            // Notify spawner
             onCollected?.Invoke();
 
             Destroy(gameObject);

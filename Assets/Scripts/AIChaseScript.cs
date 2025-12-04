@@ -24,7 +24,7 @@ public class AIChaseScript : MonoBehaviour
     private Rigidbody2D rb;
     private bool isPaused = false;
     private bool isChasing = false;
-    private float loseSightTimer = 0f;
+    private float loseSightTimer = 5f;
 
     private Queue<Vector2> playerTrail = new Queue<Vector2>();
     private float trailTimer = 0f;

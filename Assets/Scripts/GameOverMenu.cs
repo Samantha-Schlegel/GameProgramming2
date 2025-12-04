@@ -40,4 +40,9 @@ public class GameOverMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+      public void GoToMainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
 }
