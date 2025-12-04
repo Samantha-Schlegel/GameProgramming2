@@ -5,7 +5,7 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager instance;
 
     public int score = 0;
-    public int maxScore = 6;
+    public int maxScore = 4;
 
     private GameManager gameManager;
 

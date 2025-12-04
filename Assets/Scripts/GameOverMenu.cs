@@ -14,6 +14,15 @@ public class GameOverMenu : MonoBehaviour
 
         Debug.Log("Game Over! Final Score: " + finalScore);
     }
+        public void ShowFinalBadScore(float finalBadScore)
+    {
+        gameObject.SetActive(true);
+
+        if (finalScoreText != null)
+            finalScoreText.text = $"Final Score: {Mathf.RoundToInt(finalBadScore)}";
+
+        Debug.Log("Game Over! Final Score: " + finalBadScore);
+    }
 
     public void HideMenu()
     {
