@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
 
 
 
+
     private string GetCallerInfo()
     {
         var st = new StackTrace(true);
@@ -166,6 +167,26 @@ public void BindGameTimer(GameTimer t)
 }
 
 
-
 }
 
+public class SceneResetter : MonoBehaviour
+{
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu") // replace with your actual main menu scene name
+        {
+            GameManager.instance?.ResetGameValues();
+        }
+    }
+}

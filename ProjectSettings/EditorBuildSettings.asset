@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_JM.unity
     guid: b6cec8a548ef39b4190955ce5aa09d90
+  - enabled: 1
+    path: Assets/Scenes/HighScoreScene.unity
+    guid: c033dc3769bcd1e479fc4509f325e924
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

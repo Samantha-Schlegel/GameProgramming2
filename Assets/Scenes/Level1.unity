@@ -9111,6 +9111,7 @@ GameObject:
   - component: {fileID: 458676278}
   - component: {fileID: 458676277}
   - component: {fileID: 458676281}
+  - component: {fileID: 458676282}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -9202,6 +9203,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   badScore: 0
+--- !u!114 &458676282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458676272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3d9d2f907312748abff18a40f67b69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    entries: []
 --- !u!1 &476588190
 GameObject:
   m_ObjectHideFlags: 0
@@ -22859,7 +22874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564e824d3f19d0343ad1e4493dc7f457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 80
+  duration: 100
   remaining: 0
   elapsed: 0
   timerText: {fileID: 1301398759}
@@ -27246,8 +27261,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -136, y: 37}
-  m_SizeDelta: {x: 160.3095, y: 69.9257}
+  m_AnchoredPosition: {x: -195.7428, y: 95.76343}
+  m_SizeDelta: {x: 183.8898, y: 85.3573}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2008926557
 MonoBehaviour:
@@ -27270,9 +27285,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Your hunt for the most wanted and dangerous took an undesirable turn! You're
-    now stuck inside with them all and they have a vengance. Maybe the posters lying
-    around the mansion can help you figure out what's going on? Avoid these dangerous
-    people until the timer is out to survive!
+    now stuck inside with them all and they have a vengance. The most you can hope
+    is to salvage the wanted posters lying around and to hide longer enough for them
+    to lose interest! Avoid these dangerous people until the timer is out to survive!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -27337,7 +27352,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -53.177734, w: 0}
+  m_margin: {x: 0, y: 0, z: -84.48923, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
