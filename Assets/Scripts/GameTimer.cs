@@ -25,8 +25,8 @@ public class GameTimer : MonoBehaviour
     {
         if (!running) return;
 
-        remaining -= Time.unscaledDeltaTime;
-        elapsed += Time.unscaledDeltaTime;
+        remaining -= Time.deltaTime;
+        elapsed += Time.deltaTime;
 
         if (timerText != null)
         {

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
 
     private int[] scoreThresholds = {60, 120, 180};
-    private int[] badScoreThresholds = {1, 2, 3};
+    private int[] badScoreThresholds = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
     private bool[] scoreTriggered;
     private bool[] badScoreTriggered;
 
@@ -183,10 +183,12 @@ public class SceneResetter : MonoBehaviour
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{
+    if (scene.name == "MainMenu")
     {
-        if (scene.name == "MainMenu")
-        {
-            GameManager.instance?.ResetGameValues();
-        }
+        GameManager.instance?.ResetGameValues();
+        FindObjectOfType<HighscoreMenu>()?.ResetSubmission();
     }
+}
+
 }

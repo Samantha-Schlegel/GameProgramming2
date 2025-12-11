@@ -9,18 +9,21 @@ public class HighscoreMenu : MonoBehaviour
 
     private bool scoreSubmitted = false;
 
-    public void SubmitScore()
-    {
-        if (scoreSubmitted) return;
+public void SubmitScore()
+{
+    if (scoreSubmitted) return;
 
-        string initials = initialsInput.text.ToUpper();
-        int finalScore = Mathf.RoundToInt(GameManager.instance.score);
+    string initials = initialsInput.text.ToUpper();
+    int finalScore = Mathf.RoundToInt(GameManager.instance.score);
 
-        HighscoreManager.instance.AddScore(initials, finalScore);
-        UpdateBoard();
+    HighscoreManager.instance.AddScore(initials, finalScore);
+    UpdateBoard();
 
-        scoreSubmitted = true; 
-    }
+    scoreSubmitted = true;
+
+    GameManager.instance?.ResetGameValues();
+}
+
 
     public void UpdateBoard()
     {
