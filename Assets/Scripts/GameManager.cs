@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public bool gameStarted = false;
 
 
-    private int[] scoreThresholds = {60, 120, 180};
+    private int[] scoreThresholds = {60000000, 1200000, 1800000};
     private int[] badScoreThresholds = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
     private bool[] scoreTriggered;
     private bool[] badScoreTriggered;
@@ -87,48 +87,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
-
-
-
-    private string GetCallerInfo()
-    {
-        var st = new StackTrace(true);
-        for (int i = 0; i < st.FrameCount; i++)
-        {
-            var frame = st.GetFrame(i);
-            var method = frame.GetMethod();
-            if (method == null) continue;
-            var declaringType = method.DeclaringType;
-            if (declaringType == null) continue;
-            string typeName = declaringType.FullName;
-            if (!typeName.StartsWith("System.") && !typeName.StartsWith("UnityEngine.") && !typeName.Contains("GameManager"))
-            {
-                return $"{typeName}.{method.Name} (at {frame.GetFileName()}:{frame.GetFileLineNumber()})";
-            }
-        }
-        if (st.FrameCount > 2)
-        {
-            var f = st.GetFrame(2);
-            var m = f.GetMethod();
-            return $"{m.DeclaringType.FullName}.{m.Name} (at {f.GetFileName()}:{f.GetFileLineNumber()})";
-        }
-        return "UnknownCaller";
-    }
-
-    private void LogEndTrigger(string type, float computedScore)
-    {
-        string caller = GetCallerInfo();
-        string sceneName = SceneManager.GetActiveScene().name;
-        Debug.Log($"[EndTrigger] Type={type} Scene=\"{sceneName}\" Time={Time.time} ComputedScore={computedScore} Caller={caller}");
-        Debug.Log($"[EndTrigger StackTrace]\n{new StackTrace(true).ToString()}");
-    }
-
-
-
-
-
 public void EndGame()
 {
     if (gameTimer != null && gameTimer.remaining > 0f)
@@ -138,13 +96,16 @@ public void EndGame()
     }
 
     float elapsedTime = gameTimer != null ? gameTimer.elapsed : 0f;
-    float finalScore = (10 + (score * 10000f));
-    Debug.Log($"Game Over! Final Score = {finalScore}");
+    float finalScore = (10 + (score * 100f));
+    float finalBadScore = badScore; 
+    float finalMergedScore = finalScore + finalBadScore;
+
+    Debug.Log($"Game Over! Final Score = {finalScore}, BadScore = {finalBadScore}, Merged = {finalMergedScore}");
 
     Time.timeScale = 1f;
     if (gameOverMenu != null)
     {
-        gameOverMenu.ShowFinalScore(finalScore);
+        gameOverMenu.ShowFinalScore(finalMergedScore);
     }
 
     Time.timeScale = 0f;

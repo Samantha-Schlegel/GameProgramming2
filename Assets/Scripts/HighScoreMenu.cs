@@ -14,15 +14,18 @@ public void SubmitScore()
     if (scoreSubmitted) return;
 
     string initials = initialsInput.text.ToUpper();
-    int finalScore = Mathf.RoundToInt(GameManager.instance.score);
+
+    int finalScore = Mathf.RoundToInt(
+        (10 + (GameManager.instance.score * 100f)) + GameManager.instance.badScore
+    );
 
     HighscoreManager.instance.AddScore(initials, finalScore);
     UpdateBoard();
 
     scoreSubmitted = true;
-
     GameManager.instance?.ResetGameValues();
 }
+
 
 
     public void UpdateBoard()
