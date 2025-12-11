@@ -10,7 +10,7 @@ public class GameTimer : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI timerText;
 
-    private float remaining;
+    public float remaining;
     private bool timerEnded = false;
     private GameManager gameManager;
 
@@ -55,10 +55,10 @@ public class GameTimer : MonoBehaviour
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
 
-        if (gameManager != null)
-        {
-            gameManager.EndGame(currentScore);
-        }
+   //     if (gameManager != null)
+     //    {
+     //        gameManager.EndGame(currentScore);
+      //   }
         else
         {
             Debug.LogWarning("[GameTimer] GameManager not found when timer reached 0. Pausing time.");

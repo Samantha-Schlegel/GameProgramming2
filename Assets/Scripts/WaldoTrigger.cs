@@ -8,8 +8,7 @@ public class WaldoTrigger : MonoBehaviour
     {
         if (other.CompareTag(playerTag))
         {
-            ScoreManager.instance.AddPoint();
-            Destroy(gameObject);
+            ScoreManager.instance.AddPoint(gameObject);
         }
     }
 }

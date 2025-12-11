@@ -1,13 +1,33 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameStartMenu : MonoBehaviour
 {
     public CanvasGroup menuGroup;
     public Button startButton;
 
-    void Start()
+    private static bool hasOpenedOnce = false;
+
+    private void Start()
     {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+
+        if (hasOpenedOnce)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        if (currentScene != 1)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        hasOpenedOnce = true;
+
         ShowMenu(true);
         Time.timeScale = 0f;
 
