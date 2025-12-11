@@ -3,77 +3,67 @@ using TMPro;
 
 public class GameTimer : MonoBehaviour
 {
-    [Tooltip("Countdown start time in seconds")]
-    public float startTime = 60f;
-
-    public float elapsed = 0f;
+    public float duration = 60f;
+    public float remaining;
+    public float elapsed;
+    private bool running;
 
     [SerializeField] private TextMeshProUGUI timerText;
 
-    public float remaining;
-    private bool timerEnded = false;
-    private GameManager gameManager;
-
-    void Start()
+    private void Awake()
     {
-        remaining = startTime;
+        GameManager.instance?.BindGameTimer(this);
+    }
+
+    private void Start()
+    {
+        ResetTimer();
+        StartTimer();
+    }
+
+    private void Update()
+    {
+        if (!running) return;
+
+        remaining -= Time.unscaledDeltaTime;
+        elapsed += Time.unscaledDeltaTime;
+
+        if (timerText != null)
+        {
+            int minutes = Mathf.FloorToInt(remaining / 60f);
+            int seconds = Mathf.FloorToInt(remaining % 60f);
+            timerText.text = $"TIME: {minutes:00}:{seconds:00}";
+        }
+
+        if (remaining <= 0f)
+        {
+            remaining = 0f;
+            running = false;
+            GameManager.instance?.EndGame();
+        }
+    }
+
+    public void StartTimer()
+    {
+        running = true;
+    }
+
+    public void StopTimer()
+    {
+        running = false;
+    }
+
+    public void ResetTimer()
+    {
+        remaining = duration;
         elapsed = 0f;
-        gameManager = FindFirstObjectByType<GameManager>();
-        UpdateDisplay();
-    }
+        running = false;
 
-    void Update()
-    {
-        if (timerEnded) return;
-
-        if (remaining > 0f)
+        if (timerText != null)
         {
-            float delta = Time.deltaTime;
-            remaining -= delta;
-            elapsed += delta;
-
-            if (remaining <= 0f)
-            {
-                remaining = 0f;
-                timerEnded = true;
-                UpdateDisplay();
-                EndLevelAsWin();
-            }
-            else
-            {
-                UpdateDisplay();
-            }
+            int minutes = Mathf.FloorToInt(remaining / 60f);
+            int seconds = Mathf.FloorToInt(remaining % 60f);
+            timerText.text = $"TIME: {minutes:00}:{seconds:00}";
         }
-    }
-
-    private void EndLevelAsWin()
-    {
-        int currentScore = 0;
-        if (ScoreManager.instance != null)
-            currentScore = ScoreManager.instance.score;
-
-        if (gameManager == null)
-            gameManager = FindFirstObjectByType<GameManager>();
-
-   //     if (gameManager != null)
-     //    {
-     //        gameManager.EndGame(currentScore);
-      //   }
-        else
-        {
-            Debug.LogWarning("[GameTimer] GameManager not found when timer reached 0. Pausing time.");
-            Time.timeScale = 0f;
-        }
-    }
-
-    private void UpdateDisplay()
-    {
-        if (timerText == null)
-            return;
-
-        int totalSeconds = Mathf.Max(0, Mathf.CeilToInt(remaining));
-        int minutes = totalSeconds / 60;
-        int seconds = totalSeconds % 60;
-        timerText.text = $"TIME: {minutes}:{seconds:00}";
     }
 }

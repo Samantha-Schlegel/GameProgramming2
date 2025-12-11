@@ -83,22 +83,28 @@ public class GameOverMenu : MonoBehaviour
 }
 
 
-        public void LoadNextScene()
+public void LoadNextScene()
+{
+    HideMenu();
+    Time.timeScale = 1f;
+
+    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    int nextSceneIndex = currentSceneIndex + 1;
+
+    if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
     {
-        HideMenu();
+        SceneManager.LoadScene(nextSceneIndex);
 
-        Time.timeScale = 1f; 
-
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = currentSceneIndex + 1;
-
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        if (GameManager.instance != null && GameManager.instance.gameTimer != null)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneIndex);
-        }
-        else
-        {
-            Debug.Log("No next scene in the build settings.");
+            GameManager.instance.gameTimer.ResetTimer();
+            GameManager.instance.gameTimer.StartTimer();
         }
     }
+    else
+    {
+        Debug.Log("No next scene in the build settings.");
+    }
+}
+
 }

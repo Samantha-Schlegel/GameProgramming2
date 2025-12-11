@@ -29,16 +29,22 @@ public class GameStartMenu : MonoBehaviour
         hasOpenedOnce = true;
 
         ShowMenu(true);
-        Time.timeScale = 0f;
+       Time.timeScale = 0f;
 
         startButton.onClick.AddListener(CloseMenu);
     }
 
-    void CloseMenu()
+void CloseMenu()
+{
+    ShowMenu(false);
+    Time.timeScale = 1f;
+
+    if (GameManager.instance != null && GameManager.instance.gameTimer != null)
     {
-        ShowMenu(false);
-        Time.timeScale = 1f;
+        GameManager.instance.gameTimer.StartTimer();
     }
+}
+
 
     void ShowMenu(bool visible)
     {

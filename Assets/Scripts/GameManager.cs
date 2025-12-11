@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     [SerializeField] private GameOverMenu gameOverMenu; 
-    [SerializeField] private GameTimer gameTimer;        
+    [SerializeField] public GameTimer gameTimer;        
 
     public int score = 0;
     public int badScore = 0;
@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
         ResetGameValues();
         if (gameOverMenu != null)
             gameOverMenu.HideMenu();
@@ -92,9 +93,7 @@ public class GameManager : MonoBehaviour
 
     private string GetCallerInfo()
     {
-        // skip 0=this method, 1=EndGame/FailedGame, 2=immediate caller -> so request frame index 2
         var st = new StackTrace(true);
-        // find first frame outside UnityEngine and this class if possible
         for (int i = 0; i < st.FrameCount; i++)
         {
             var frame = st.GetFrame(i);
@@ -103,13 +102,11 @@ public class GameManager : MonoBehaviour
             var declaringType = method.DeclaringType;
             if (declaringType == null) continue;
             string typeName = declaringType.FullName;
-            // prefer frames that are not System or UnityEngine
             if (!typeName.StartsWith("System.") && !typeName.StartsWith("UnityEngine.") && !typeName.Contains("GameManager"))
             {
                 return $"{typeName}.{method.Name} (at {frame.GetFileName()}:{frame.GetFileLineNumber()})";
             }
         }
-        // fallback to frame 2 if available
         if (st.FrameCount > 2)
         {
             var f = st.GetFrame(2);
@@ -140,7 +137,7 @@ public void EndGame()
     }
 
     float elapsedTime = gameTimer != null ? gameTimer.elapsed : 0f;
-    float finalScore = (score * 10000f);
+    float finalScore = (10 + (score * 10000f));
     Debug.Log($"Game Over! Final Score = {finalScore}");
 
     Time.timeScale = 1f;
@@ -149,7 +146,7 @@ public void EndGame()
         gameOverMenu.ShowFinalScore(finalScore);
     }
 
-    Time.timeScale = 0f;
+    //Time.timeScale = 0f;
 }
 public void FailedGame()
 {
@@ -160,7 +157,12 @@ public void FailedGame()
     {
         gameOverMenu.ShowFinalBadScore(badScore);
     }
-    Time.timeScale = 0f;
+    //Time.timeScale = 0f;
+}
+public void BindGameTimer(GameTimer t)
+{
+    gameTimer = t;
+    Debug.Log($"[GameManager] Bound GameTimer instance {t.GetInstanceID()}");
 }
 
 
