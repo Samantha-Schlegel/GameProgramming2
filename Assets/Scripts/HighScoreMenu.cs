@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class HighscoreMenu : MonoBehaviour
 {
@@ -35,5 +36,12 @@ public class HighscoreMenu : MonoBehaviour
     public void ResetSubmission()
     {
         scoreSubmitted = false;
+    }
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu")
+        {
+            GameManager.instance?.ResetGameValues();
+        }
     }
 }

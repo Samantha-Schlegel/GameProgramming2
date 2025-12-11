@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Debug = UnityEngine.Debug;   
+using System.Diagnostics; 
 
 public class HighscoreManager : MonoBehaviour
 {

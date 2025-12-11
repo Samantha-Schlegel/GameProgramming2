@@ -14206,6 +14206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2547288775903046235, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
+    - {fileID: 4877329819827382182, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8724890514878957345, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
     - {fileID: 7684323111282619730, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
@@ -26640,7 +26641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7738097296533656304, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
       propertyPath: m_Name
-      value: Melinda
+      value: page1
       objectReference: {fileID: 0}
     - target: {fileID: 8332332214472192918, guid: 8dcf48ae1d66d9e4ea32ee5c2c495fe9, type: 3}
       propertyPath: m_Sprite

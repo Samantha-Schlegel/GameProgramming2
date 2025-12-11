@@ -147,7 +147,7 @@ public void EndGame()
         gameOverMenu.ShowFinalScore(finalScore);
     }
 
-    //Time.timeScale = 0f;
+    Time.timeScale = 0f;
 }
 public void FailedGame()
 {
@@ -158,7 +158,7 @@ public void FailedGame()
     {
         gameOverMenu.ShowFinalBadScore(badScore);
     }
-    //Time.timeScale = 0f;
+    Time.timeScale = 0f;
 }
 public void BindGameTimer(GameTimer t)
 {
@@ -184,7 +184,7 @@ public class SceneResetter : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu") // replace with your actual main menu scene name
+        if (scene.name == "MainMenu")
         {
             GameManager.instance?.ResetGameValues();
         }
